@@ -3,6 +3,8 @@ package com.knymbus.transmo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.knymbus.transmo.FirestoreConnection.FirestoreConnection;
+import com.knymbus.transmo.Routes.ActiveBusAdapter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +45,20 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //        Call the list of active bus and display info in recycler view in main window
+//        Create recycler
+        RecyclerView rv = findViewById(R.id.rv_main_search_result);
+
+//        create adapter
+        ActiveBusAdapter activeBusAdapter = new ActiveBusAdapter(FirestoreConnection.BusDataManager.ActiveBusQuery(), getApplicationContext());
+
+//         configure recyclerview
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rv.setAdapter(activeBusAdapter);
+
+        activeBusAdapter.startListening();
     }
 
     @Override

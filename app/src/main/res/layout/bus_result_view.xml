@@ -2,14 +2,15 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="120dp"
-    android:background="@color/colorPrimaryDark">
+    android:layout_marginBottom="5dp"
+  >
 
     <TextView
         android:id="@+id/bus_number"
         android:layout_width="60dp"
         android:layout_height="match_parent"
         android:text="83"
-        android:textSize="46sp"
+        android:textSize="30sp"
         android:textAlignment="center"
         android:layout_marginTop="37dp"
         android:layout_marginStart="16dp"
@@ -26,7 +27,6 @@
         android:layout_toRightOf="@id/bus_number"
         android:text="HWT"
         android:textAlignment="center"
-        android:textColor="@color/colorWhite"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -41,7 +41,7 @@
         android:layout_marginStart="16dp"
         android:layout_toRightOf="@id/bus_number"
         android:layout_below="@id/departure_from"
-        android:textColor="@color/colorWhite"
+
         />
 
     <TextView
@@ -54,7 +54,7 @@
         android:layout_toEndOf="@id/bus_number"
         android:text="running late"
         android:textAlignment="center"
-        android:textColor="@color/colorWhite"
+
         android:textSize="16sp"
         android:textStyle="italic" />
 
@@ -67,7 +67,7 @@
         android:layout_toRightOf="@id/departure_from"
         android:text="DTK"
         android:textAlignment="center"
-        android:textColor="@color/colorWhite"
+
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -83,7 +83,7 @@
         android:layout_marginStart="50dp"
         android:layout_toRightOf="@id/departure_from_time"
         android:layout_below="@id/destination_to"
-        android:textColor="@color/colorWhite"
+
         />
 
     <RelativeLayout
@@ -101,7 +101,7 @@
         android:layout_marginTop="20dp"
 
 
-        android:textColor="@color/colorWhite"
+
         android:layout_alignParentEnd="true"
         />
         <TextView
@@ -114,7 +114,7 @@
 
 
 
-            android:textColor="@color/colorWhite"
+
             android:layout_below="@+id/eta"
             />
     </RelativeLayout>

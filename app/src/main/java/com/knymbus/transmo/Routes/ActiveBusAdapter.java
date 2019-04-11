@@ -3,6 +3,7 @@ package com.knymbus.transmo.Routes;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.knymbus.transmo.Helper.Helper;
+import com.knymbus.transmo.Helper.SystemInterface;
 import com.knymbus.transmo.R;
 
 
@@ -32,7 +35,16 @@ public class ActiveBusAdapter extends FirestoreRecyclerAdapter<ActiveBus, Active
 
     @Override
     protected void onBindViewHolder(@NonNull BusHolder holder, int position, @NonNull ActiveBus model) {
-        holder.busNumber.setText(model.getBusNunber());
+        holder.busNumber.setText(model.getBusNumber());
+        holder.origin.setText(model.origin.code);
+        holder.originDepartureTime.setText(Helper.DateFormatter(SystemInterface.DateTimeFormat.timeFormat,model.origin.time.toDate()));
+
+        holder.destination.setText(model.getDestination().code);
+        holder.destinationTime.setText(Helper.DateFormatter(SystemInterface.DateTimeFormat.timeFormat,model.getDestination().time.toDate()));
+
+//        Estimated time of departure
+        TimeManager.timeLaspe(model.origin.time,holder.timeStatus);
+
     }
 
     @NonNull
@@ -64,6 +76,25 @@ public class ActiveBusAdapter extends FirestoreRecyclerAdapter<ActiveBus, Active
             mView = itemView;
 
             busNumber = mView.findViewById(R.id.bus_number);
+            busNumber.setText("");
+
+            origin = mView.findViewById(R.id.departure_from);
+            origin.setText("");
+
+            originDepartureTime = mView.findViewById(R.id.departure_from_time);
+            originDepartureTime.setText("");
+
+            destination = mView.findViewById(R.id.destination_to);
+            destination.setText("");
+
+            destinationTime = mView.findViewById(R.id.destination_to_time);
+            destinationTime.setText("");
+
+            timeStatus = mView.findViewById(R.id.eta);
+            timeStatus.setText("");
+
+
+
 
         }
     }
