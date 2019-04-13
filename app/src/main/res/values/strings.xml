@@ -1,9 +1,15 @@
 <resources>
-    <string name="app_name">transmo</string>
+    <string name="app_name">Transico</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+    <!--Main window views-->
+    <string name="window_route">Routes</string>
+    <string name="title_activity_entrance">EntranceActivity</string>
+    <string name="title_activity_manage_card_balance">ManageCardBalanceActivity</string>
+    <string name="title_activity_topup">TopupActivity</string>
 </resources>

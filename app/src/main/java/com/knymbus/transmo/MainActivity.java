@@ -1,25 +1,25 @@
 package com.knymbus.transmo;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.knymbus.transmo.FirestoreConnection.FirestoreConnection;
-import com.knymbus.transmo.Routes.ActiveBusAdapter;
+import com.knymbus.transmo.Helper.Helper;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private String activeUser = "John";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +27,47 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+//        setActivityTitle(R.string.window_route);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        TextView txtWelcome = findViewById(R.id.welcome);
+//        creating the three buttons from design
+        LinearLayout btnRoute, btnBalance, btnTopup;
+
+//        set object var
+        btnRoute = findViewById(R.id.layout_track_bus);
+        btnBalance = findViewById(R.id.layout_check_balance);
+        btnTopup = findViewById(R.id.layout_topup);
+
+//        create on click listener for route
+        btnRoute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), RouteActivity.class);
+                startActivity(i);
+            }
+        });
+
+//        create on click listener for Card balances
+        btnBalance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), ManageCardBalanceActivity.class);
+                startActivity(i);
+            }
+        });
+
+//        create on click listener for Card balances
+        btnTopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), TopupActivity.class);
+                startActivity(i);
+            }
+        });
+
+        txtWelcome.setText(Helper.stringBuilder("Welcome %s what are you doing today?",activeUser));
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -47,18 +79,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //        Call the list of active bus and display info in recycler view in main window
-//        Create recycler
-        RecyclerView rv = findViewById(R.id.rv_main_search_result);
-
-//        create adapter
-        ActiveBusAdapter activeBusAdapter = new ActiveBusAdapter(FirestoreConnection.BusDataManager.ActiveBusQuery(), getApplicationContext());
-
-//         configure recyclerview
-        rv.setHasFixedSize(true);
-        rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        rv.setAdapter(activeBusAdapter);
-
-        activeBusAdapter.startListening();
+//
     }
 
     @Override
@@ -116,5 +137,15 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void setActivityTitle(int title){
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setTitle(title);
+
+//            this remove the arrow used with activity and fragment
+//             getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
     }
 }

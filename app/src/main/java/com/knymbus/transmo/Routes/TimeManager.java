@@ -18,11 +18,11 @@ import java.util.Map;
 /**
  *
  */
-public abstract class TimeManager {
+public class TimeManager {
 
-    public static Runnable ticker;
+    public Runnable ticker;
 
-    public static Integer percentage(int numerator, int denominator){
+    public Integer percentage(int numerator, int denominator){
         double total = 0.0;
 
         if(denominator == 0) return 0;
@@ -32,7 +32,7 @@ public abstract class TimeManager {
         return (int)Math.round(total);
     }
 
-    public static double percentage(int numerator, int denominator, int decimalsplaces){
+    public double percentage(int numerator, int denominator, int decimalsplaces){
         double total = 0.0;
         double finalValue = 0;
         if(denominator == 0){
@@ -66,7 +66,7 @@ public abstract class TimeManager {
      * @return double e.g. 45.56
      *
      */
-    public static double percentage(double numerator, double denominator, int decimalsplaces){
+    public double percentage(double numerator, double denominator, int decimalsplaces){
         double total = 0.0;
         double finalValue = 0;
         if(denominator == 0){
@@ -98,7 +98,7 @@ public abstract class TimeManager {
      *
      * This is function that will take two dates and calculate the difference in time
      */
-    public static String timeDiff(Timestamp timestamp1, Timestamp timestamp2){
+    public String timeDiff(Timestamp timestamp1, Timestamp timestamp2){
         Map timeDiff = getTimeDiff(timestamp1,timestamp2);
         int hours = (int)timeDiff.get(time.hours);
         int minutes = (int)timeDiff.get(time.minutes);
@@ -134,10 +134,10 @@ public abstract class TimeManager {
      * @param postTime
      * @return
      */
-    public static void timeLaspe(final Timestamp postTime, final TextView textView){
+    public void timeLaspe(final Timestamp postTime, final TextView tvtime, final TextView tvUnit ){
 
         final Handler handler = new Handler();
-        TimeManager.ticker = new Runnable() {
+        ticker = new Runnable() {
             @Override
             public void run() {
 
@@ -150,32 +150,58 @@ public abstract class TimeManager {
                 int mins = Integer.parseInt(diffInTime.get(time.minutes).toString());
                 int sec = Integer.parseInt(diffInTime.get(time.seconds).toString());
                 int day = Integer.parseInt(diffInTime.get(time.day).toString());
-                String s;
+                int flag = Integer.parseInt(diffInTime.get(time.flag).toString());
+                String s, u;
 
 
                 //If the day is 1 to 7 then
                 if(day > 0 && day < 8){
-                    s = Helper.stringBuilder("%d Day",day);
-                    textView.setText(s);
+                    s = Helper.stringBuilder("%d",day);
+                    u = Helper.stringBuilder("Day");
+                    tvtime.setText(s);
+                    tvUnit.setText(u);
                 }
 
                 //If day greater than 7 days then we show the date
                 if(day > 7){
                     //To display the date and year we need to know if its the current year then show e.g. Dec 19
                     //other wise show Dec 19, 2018
-                    textView.setText(formatDate(postTime));
+                    tvtime.setText(formatDate(postTime));
+                    tvUnit.setText("week");
                 }
 
                 //
 
-                if(day < 1 ){
-                    textView.setText(formatTime(hr,mins,sec));
+                if(day < 1 && hr > 1 && hr < 24 ){
+                    tvtime.setText(formatTime(hr,mins,sec));
+
+
+                    if(flag == 1){
+                        tvUnit.setText("hrs ago");
+                    }else{
+                        tvUnit.setText("hrs");
+                    }
+                }
+
+                if(day == 0 && mins > 0 && mins < 59 ){
+                    tvtime.setText(Helper.stringBuilder("%d",mins));
+
+                    if(flag == 1){
+                        tvUnit.setText("min ago");
+                    }else{
+                        tvUnit.setText("min");
+                    }
+
+                }
+
+                if(day == 0 && mins == 0 && sec > 0 && sec < 60){
+                    tvtime.setText(Helper.stringBuilder(""));
+                    tvUnit.setText("now");
                 }
 
 
 
-
-                handler.postAtTime(TimeManager.ticker, next);
+                handler.postAtTime(ticker, next);
 
             }
         };
@@ -205,12 +231,12 @@ public abstract class TimeManager {
     private static String formatTime(int hr, int mins, int sec){
 
         if(hr > 0 && hr < 24){
-            return  (hr > 1 ? Helper.stringBuilder("%d Hours Ago",hr): Helper.stringBuilder("%d Hours Ago",hr));
+            return  Helper.stringBuilder("%d",hr);
         }
 
         //if minutes greater than 1 and less than 59 then show minutes e.g 4 Minutes aga
-        if(mins > 0 && mins < 60){
-            return  Helper.stringBuilder("%d min",mins);
+        if(hr < 1 && mins > 0 && mins < 60){
+            return  Helper.stringBuilder("%d",mins);
         }
 
         if(sec > 0 && sec < 59){
@@ -252,6 +278,7 @@ public abstract class TimeManager {
 
         if(time1 > time2){
             elapse = time1 - time2;
+            result.put(time.flag, 1);
         }else{
             elapse = time2 -time1;
         }
@@ -274,7 +301,7 @@ public abstract class TimeManager {
      * @param t2
      * @return
      */
-    private static Map<String, Integer> getTimeDiff(Date t1, Timestamp t2){
+    private Map<String, Integer> getTimeDiff(Date t1, Timestamp t2){
         Map<String, Integer>result = new HashMap<>();
 
         Timestamp t3 = new Timestamp(t1);
@@ -282,8 +309,11 @@ public abstract class TimeManager {
         long time1 = t3.getSeconds();
         long time2 = t2.getSeconds();
 
+        result.put(time.flag, 0);
+
         if(time1 > time2){
             elapse = time1 - time2;
+            result.put(time.flag, 1);
         }else{
             elapse = time2 -time1;
         }
@@ -353,6 +383,7 @@ public abstract class TimeManager {
         String minutes = "minutes";
         String seconds = "seconds";
         String day = "day";
+        String flag = "flag";
     }
 
 }

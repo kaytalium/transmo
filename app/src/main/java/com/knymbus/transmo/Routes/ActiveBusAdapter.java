@@ -1,9 +1,9 @@
 package com.knymbus.transmo.Routes;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +22,7 @@ public class ActiveBusAdapter extends FirestoreRecyclerAdapter<ActiveBus, Active
     private Context $context;
 
 
+
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
@@ -36,14 +37,16 @@ public class ActiveBusAdapter extends FirestoreRecyclerAdapter<ActiveBus, Active
     @Override
     protected void onBindViewHolder(@NonNull BusHolder holder, int position, @NonNull ActiveBus model) {
         holder.busNumber.setText(model.getBusNumber());
-        holder.origin.setText(model.origin.code);
-        holder.originDepartureTime.setText(Helper.DateFormatter(SystemInterface.DateTimeFormat.timeFormat,model.origin.time.toDate()));
+        holder.origin.setText(model.getOrigin().code);
+        holder.busStatus.setText(model.getStatus());
+        holder.originDepartureTime.setText(Helper.DateFormatter(SystemInterface.DateTimeFormat.timeFormat,model.getOrigin().scheduleDepartureTime.toDate()));
 
         holder.destination.setText(model.getDestination().code);
-        holder.destinationTime.setText(Helper.DateFormatter(SystemInterface.DateTimeFormat.timeFormat,model.getDestination().time.toDate()));
+        holder.destinationTime.setText(Helper.DateFormatter(SystemInterface.DateTimeFormat.timeFormat,model.getDestination().scheduleArrivalTime.toDate()));
 
 //        Estimated time of departure
-        TimeManager.timeLaspe(model.origin.time,holder.timeStatus);
+        TimeManager timeManager = new TimeManager();
+        timeManager.timeLaspe(model.getOrigin().scheduleDepartureTime,holder.timeStatus, holder.timeStatusUnit);
 
     }
 
@@ -68,6 +71,7 @@ public class ActiveBusAdapter extends FirestoreRecyclerAdapter<ActiveBus, Active
         TextView destinationTime;
         TextView busStatus;
         TextView timeStatus;
+        TextView timeStatusUnit;
 
 
         public BusHolder(@NonNull View itemView) {
@@ -92,6 +96,12 @@ public class ActiveBusAdapter extends FirestoreRecyclerAdapter<ActiveBus, Active
 
             timeStatus = mView.findViewById(R.id.eta);
             timeStatus.setText("");
+
+            timeStatusUnit = mView.findViewById(R.id.eta_min);
+            timeStatusUnit.setText("");
+
+            busStatus = mView.findViewById(R.id.bus_status);
+            busStatus.setText("");
 
 
 

@@ -4,5 +4,6 @@ import com.google.firebase.Timestamp;
 
 public class RouteOrigin {
     public String code;
-    public Timestamp time;
+    public Timestamp scheduleDepartureTime;
+    public Timestamp actualDepartureTime;
 }

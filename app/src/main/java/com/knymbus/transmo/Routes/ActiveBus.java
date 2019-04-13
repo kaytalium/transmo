@@ -2,18 +2,22 @@ package com.knymbus.transmo.Routes;
 
 public class ActiveBus {
 
-    public String busModel, busNumber;
-    public RouteOrigin destination, origin;
+    private String busModel, busNumber, status;
+    private RouteOrigin origin;
+    private RouteDestination destination;
 
 
     public ActiveBus() {}
 
-    public ActiveBus(String busModel, String busNunber, RouteOrigin destination, RouteOrigin origin) {
+    public ActiveBus(String busModel, String busNunber, RouteDestination destination, RouteOrigin origin, String status) {
         this.busModel = busModel;
         this.busNumber = busNunber;
         this.destination = destination;
         this.origin = origin;
+        this.status = status;
     }
+
+    public String getStatus() {return status;}
 
     public String getBusModel() {
         return busModel;
@@ -23,7 +27,7 @@ public class ActiveBus {
         return busNumber;
     }
 
-    public RouteOrigin getDestination() {
+    public RouteDestination getDestination() {
         return destination;
     }
 
