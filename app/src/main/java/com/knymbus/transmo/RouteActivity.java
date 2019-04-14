@@ -13,11 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
+import com.knymbus.transmo.Routes.AutoComplete;
 import com.knymbus.transmo.Routes.RouteEngine;
 
 public class RouteActivity extends AppCompatActivity {
 
-    String[] searchHelpers = new String[]{"Half Way Tree", "Down Town Kingston", "Mountain View"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class RouteActivity extends AppCompatActivity {
         routeEngine.start();
 
         AutoCompleteTextView mainSearch = toolbar.findViewById(R.id.origin_location_search);
-        mainSearch.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, searchHelpers));
+        mainSearch.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, AutoComplete.sugesstion()));
 
         mainSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

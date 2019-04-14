@@ -7,6 +7,10 @@ public interface SystemInterface {
         public  String destinationTime = "destination/time";
     }
 
+    interface CardTransaction{
+        String parentNode = "smarter_card_balance";
+    }
+
     /**
      * General Time and date formatting
      */

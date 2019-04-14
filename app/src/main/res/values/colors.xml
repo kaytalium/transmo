@@ -8,5 +8,12 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorWhiteDim">#A2A0A0</color>
     <color name="colorBlue">#0D30DF</color>
+    <color name="colorDarkBlue">#051DAD</color>
     <color name="colorRed">#B10A0A</color>
+    <color name="colorGreen">#1E8F10</color>
+
+    <!--Top up color scheme-->
+    <color name="colorFunkyBlue">#303381</color>
+    <color name="colorFunkyDarkBlue">#26296F</color>
+
 </resources>

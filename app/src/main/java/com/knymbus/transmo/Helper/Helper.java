@@ -3,6 +3,7 @@ package com.knymbus.transmo.Helper;
 import com.google.firebase.Timestamp;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -31,6 +32,12 @@ public abstract class Helper {
         StringBuilder stringBuilder = new StringBuilder();
         Formatter fmt = new Formatter(stringBuilder);
         return fmt.format(s,args).toString();
+    }
+
+    public static String formatToMoney(double num){
+       return NumberFormat.getCurrencyInstance(new Locale("en", "US"))
+                .format(num);
+
     }
 
 
