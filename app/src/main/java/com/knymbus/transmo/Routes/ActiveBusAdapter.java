@@ -42,11 +42,19 @@ public class ActiveBusAdapter extends FirestoreRecyclerAdapter<ActiveBus, Active
         holder.originDepartureTime.setText(Helper.DateFormatter(SystemInterface.DateTimeFormat.timeFormat,model.getOrigin().scheduleDepartureTime.toDate()));
 
         holder.destination.setText(model.getDestination().code);
-        holder.destinationTime.setText(Helper.DateFormatter(SystemInterface.DateTimeFormat.timeFormat,model.getDestination().scheduleArrivalTime.toDate()));
+        holder.destinationTime.setText(Helper.DateFormatter(SystemInterface.DateTimeFormat.timeFormat,model.getDestination().actualArrivalTime.toDate()));
 
 //        Estimated time of departure
-        TimeManager timeManager = new TimeManager();
-        timeManager.timeLaspe(model.getOrigin().scheduleDepartureTime,holder.timeStatus, holder.timeStatusUnit);
+        TimeManager timeManager = new TimeManager(model.getOrigin(), model.getDestination());
+
+//        time lapse for departure
+        timeManager.timeLaspe(model.getOrigin().actualDepartureTime,holder.timeStatus, holder.timeStatusUnit);
+
+//        delay time
+        holder.delayTimeLabel.setText(timeManager.delayCalculator(model.getOrigin().scheduleDepartureTime, model.getOrigin().actualDepartureTime));
+
+//        duration time
+        holder.travelTime.setText(Helper.stringBuilder("%s",timeManager.calculateDelayTime()));
 
     }
 
@@ -72,6 +80,8 @@ public class ActiveBusAdapter extends FirestoreRecyclerAdapter<ActiveBus, Active
         TextView busStatus;
         TextView timeStatus;
         TextView timeStatusUnit;
+        TextView delayTimeLabel;
+        TextView travelTime;
 
 
         public BusHolder(@NonNull View itemView) {
@@ -102,6 +112,12 @@ public class ActiveBusAdapter extends FirestoreRecyclerAdapter<ActiveBus, Active
 
             busStatus = mView.findViewById(R.id.bus_status);
             busStatus.setText("");
+
+            delayTimeLabel = mView.findViewById(R.id.departure_from_delay_time);
+            delayTimeLabel.setText("");
+
+            travelTime = mView.findViewById(R.id.departure_from_duration_label);
+            travelTime.setText("");
 
 
 

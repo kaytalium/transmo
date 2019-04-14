@@ -19,6 +19,8 @@ public class RouteEngine {
 //    Global recycler
     private RecyclerView rv;
     private Context $contect;
+    private  ActiveBusAdapter activeBusAdapter;
+
 
     public RouteEngine(RecyclerView rv, Context $contect) {
         this.rv = rv;
@@ -29,7 +31,7 @@ public class RouteEngine {
 
     public void start(){
         //        create adapter
-        ActiveBusAdapter activeBusAdapter = new ActiveBusAdapter(FirestoreConnection.BusDataManager.ActiveBusQuery(), $contect);
+        activeBusAdapter = new ActiveBusAdapter(FirestoreConnection.BusDataManager.ActiveBusQuery(), $contect);
 
 //         configure recyclerview
         rv.setHasFixedSize(true);
@@ -37,6 +39,22 @@ public class RouteEngine {
         rv.setAdapter(activeBusAdapter);
 
         activeBusAdapter.startListening();
+    }
+
+    public void stop(){
+        activeBusAdapter.stopListening();
+    }
+
+    public void search(String searchText){
+
+        String[] searchHelpers = new String[]{"Half Way Tree", "Down Town kingston", "Mountain View"};
+
+
+        activeBusAdapter = new ActiveBusAdapter(FirestoreConnection.BusDataManager.SearchResultOfActiveBusQuery(searchText), $contect);
+        rv.setAdapter(activeBusAdapter);
+        activeBusAdapter.notifyDataSetChanged();
+        activeBusAdapter.startListening();
+
     }
 
 

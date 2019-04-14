@@ -18,8 +18,8 @@
             android:background="@color/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" >
 
-            <EditText
-                android:id="@+id/origin_location"
+            <AutoCompleteTextView
+                android:id="@+id/origin_location_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Enter Bus Route"

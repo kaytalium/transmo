@@ -4,7 +4,7 @@
     android:layout_height="130dp"
     android:layout_marginBottom="5dp"
  >
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="4">
@@ -12,6 +12,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/layout_bus_and_icon"
         android:layout_width="90dp"
         android:layout_height="match_parent">
 
@@ -50,29 +51,36 @@
             android:textSize="12sp"
             android:textStyle="italic" />
 
-    <TextView
-    android:id="@+id/cost_amount"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="$100"
-    android:textSize="12sp"
-        android:layout_marginTop="5dp"
-    android:textAlignment="center"
-    android:textColor="@color/colorWhiteDim"
-    android:layout_below="@id/bus_status"
-   />
+        <TextView
+            android:id="@+id/departure_from_delay_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+5"
+            android:textSize="13sp"
+            android:textAlignment="center"
+
+
+            android:layout_below="@id/bus_status"
+            android:textColor="@color/colorRed"
+
+
+            />
+
+
 </RelativeLayout>
 
-<RelativeLayout
-android:layout_width="wrap_content"
-android:layout_height="match_parent"
-    >
+    <RelativeLayout
+        android:id="@+id/layout_bus_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/layout_bus_and_icon"
+        android:layout_toLeftOf="@id/layout_time"
+        >
 
 <TextView
     android:id="@+id/departure_from_label"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-
     android:layout_marginTop="7dp"
     android:layout_alignParentTop="true"
     android:text="Origin"
@@ -80,6 +88,35 @@ android:layout_height="match_parent"
     android:textSize="10sp"
     android:textColor="@color/colorAccent"
     />
+
+        <TextView
+            android:id="@+id/departure_from_duration_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="7dp"
+            android:layout_marginStart="20dp"
+            android:layout_toRightOf="@id/departure_from_label"
+            android:text="35m travel time"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/cost_amount"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:text="$100"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"
+
+
+            android:layout_alignParentEnd="true"
+
+            />
+
+
 
 <TextView
     android:id="@+id/departure_from"
@@ -90,7 +127,7 @@ android:layout_height="match_parent"
    android:layout_alignParentTop="true"
     android:text="Half Way Tree"
     android:textAlignment="center"
-    android:textSize="16sp"
+    android:textSize="14sp"
     android:textStyle="bold" />
 
 
@@ -103,26 +140,8 @@ android:layout_height="match_parent"
     android:layout_marginTop="0dp"
     android:layout_below="@id/departure_from"
     android:layout_alignStart="@id/departure_from"
-
-
     />
 
-    <TextView
-        android:id="@+id/departure_from_delay_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+5"
-        android:textSize="13sp"
-        android:textAlignment="center"
-
-        android:layout_marginStart="8dp"
-
-        android:layout_toRightOf="@id/departure_from_time"
-        android:layout_below="@id/departure_from"
-        android:textColor="@color/colorRed"
-
-
-        />
 
 <TextView
     android:id="@+id/departure_from_time"
@@ -162,14 +181,14 @@ android:layout_height="match_parent"
     android:text="Down Town Kingston"
     android:textAlignment="center"
 
-    android:textSize="16sp"
+    android:textSize="14sp"
     android:textStyle="bold" />
 
 <TextView
     android:id="@+id/destination_to_time_label"
-    android:layout_width="120dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Schedule Arrival: "
+    android:text="ETA: "
     android:textSize="12sp"
     android:layout_toRightOf="@id/destination_to"
     android:layout_below="@id/destination_to"
@@ -224,39 +243,37 @@ android:layout_height="match_parent"
 <!--</RelativeLayout>-->
 
 
+        <RelativeLayout
+            android:id="@+id/layout_time"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
 
-    <RelativeLayout
-        android:id="@+id/layout_time"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-       >
+            >
 
-        <TextView
-        android:id="@+id/eta"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="25"
-        android:textSize="16sp"
-        android:textAlignment="center"
-        android:layout_marginTop="20dp"
-        android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-        />
-        <TextView
-            android:id="@+id/eta_min"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="min"
-            android:textSize="16sp"
-            android:textAlignment="center"
+            <TextView
+                android:id="@+id/eta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="20dp"
+                android:text="25"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/eta_min"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/eta"
+                android:text="min"
+                android:textAlignment="center"
 
 
+                android:textSize="16sp" />
+        </RelativeLayout>
 
-
-            android:layout_below="@+id/eta"
-            />
     </RelativeLayout>
-
-    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

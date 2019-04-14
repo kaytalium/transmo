@@ -14,13 +14,24 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  *
  */
 public class TimeManager {
 
-    public Runnable ticker;
+    private Runnable ticker;
+
+    private RouteDestination routeDestination;
+    private RouteOrigin routeOrigin;
+
+    public TimeManager() {}
+
+    public TimeManager(RouteOrigin routeOrigin, RouteDestination routeDestination) {
+        this.routeDestination = routeDestination;
+        this.routeOrigin = routeOrigin;
+    }
 
     public Integer percentage(int numerator, int denominator){
         double total = 0.0;
@@ -146,11 +157,11 @@ public class TimeManager {
                 long now = SystemClock.uptimeMillis();
                 long next = now + (1000 - now % 1000);
                 //find the time difference between now postTime and update the textview
-                int hr = Integer.parseInt(diffInTime.get(time.hours).toString());
-                int mins = Integer.parseInt(diffInTime.get(time.minutes).toString());
-                int sec = Integer.parseInt(diffInTime.get(time.seconds).toString());
-                int day = Integer.parseInt(diffInTime.get(time.day).toString());
-                int flag = Integer.parseInt(diffInTime.get(time.flag).toString());
+                int hr = Integer.parseInt(Objects.requireNonNull(diffInTime.get(time.hours)).toString());
+                int mins = Integer.parseInt(Objects.requireNonNull(diffInTime.get(time.minutes)).toString());
+                int sec = Integer.parseInt(Objects.requireNonNull(diffInTime.get(time.seconds)).toString());
+                int day = Integer.parseInt(Objects.requireNonNull(diffInTime.get(time.day)).toString());
+                int flag = Integer.parseInt(Objects.requireNonNull(diffInTime.get(time.flag)).toString());
                 String s, u;
 
 
@@ -167,36 +178,36 @@ public class TimeManager {
                     //To display the date and year we need to know if its the current year then show e.g. Dec 19
                     //other wise show Dec 19, 2018
                     tvtime.setText(formatDate(postTime));
-                    tvUnit.setText("week");
+                    tvUnit.setText(Helper.stringBuilder("week"));
                 }
 
                 //
 
-                if(day < 1 && hr > 1 && hr < 24 ){
+                if(day < 1 && hr > 0 && hr < 24 ){
                     tvtime.setText(formatTime(hr,mins,sec));
 
-
                     if(flag == 1){
-                        tvUnit.setText("hrs ago");
+                        tvUnit.setText(Helper.stringBuilder("ago"));
                     }else{
-                        tvUnit.setText("hrs");
+                        tvUnit.setText(Helper.stringBuilder("hrs"));
                     }
                 }
 
                 if(day == 0 && mins > 0 && mins < 59 ){
-                    tvtime.setText(Helper.stringBuilder("%d",mins));
 
                     if(flag == 1){
-                        tvUnit.setText("min ago");
+                        tvtime.setText(Helper.stringBuilder("%dm",mins));
+                        tvUnit.setText(Helper.stringBuilder("ago"));
                     }else{
-                        tvUnit.setText("min");
+                        tvtime.setText(Helper.stringBuilder("%d",mins));
+                        tvUnit.setText(Helper.stringBuilder("min"));
                     }
 
                 }
 
                 if(day == 0 && mins == 0 && sec > 0 && sec < 60){
                     tvtime.setText(Helper.stringBuilder(""));
-                    tvUnit.setText("now");
+                    tvUnit.setText(Helper.stringBuilder("now"));
                 }
 
 
@@ -215,7 +226,7 @@ public class TimeManager {
      * @param timestamp Firebase timestamp object
      * @return String  e.g. Dec 12, 2018 || Dec 12
      */
-    public static String formatDate(Timestamp timestamp){
+    public String formatDate(Timestamp timestamp){
         //Variables
         int year = Integer.parseInt(Helper.DateFormatter(SystemInterface.DateTimeFormat.year, timestamp.toDate()));
         int currentYear = Integer.parseInt(Helper.DateFormatter(SystemInterface.DateTimeFormat.year,new Date()));
@@ -230,17 +241,36 @@ public class TimeManager {
 
     private static String formatTime(int hr, int mins, int sec){
 
-        if(hr > 0 && hr < 24){
-            return  Helper.stringBuilder("%d",hr);
+        if(hr >= 1 && hr < 24){
+            return  Helper.stringBuilder("%dh",hr);
         }
 
         //if minutes greater than 1 and less than 59 then show minutes e.g 4 Minutes aga
         if(hr < 1 && mins > 0 && mins < 60){
-            return  Helper.stringBuilder("%d",mins);
+            return  Helper.stringBuilder("%dm",mins);
         }
 
         if(sec > 0 && sec < 59){
             return "Now";
+        }
+        return "";
+    }
+
+
+
+    private static String formatDelayTime(int hr, int mins, int sec){
+
+        if(hr > 0 && hr < 24){
+            return  Helper.stringBuilder("+%dh",hr);
+        }
+
+        //if minutes greater than 1 and less than 59 then show minutes e.g 4 Minutes aga
+        if(hr < 1 && mins > 0 && mins < 60){
+            return  Helper.stringBuilder("+%dm",mins);
+        }
+
+        if(sec > 0 && sec < 59){
+            return "";
         }
         return "";
     }
@@ -251,7 +281,7 @@ public class TimeManager {
      * @param timestamp2
      * @return
      */
-    public static Double timeDiffToDouble(Timestamp timestamp1, Timestamp timestamp2){
+    public Double timeDiffToDouble(Timestamp timestamp1, Timestamp timestamp2){
         Map result = getTimeDiff(timestamp1,timestamp2);
         double hrs = Double.valueOf(result.get(time.hours).toString());
 
@@ -269,7 +299,7 @@ public class TimeManager {
      * @param t2
      * @return
      */
-    private static Map<String, Integer> getTimeDiff(Timestamp t1, Timestamp t2){
+    private Map<String, Integer> getTimeDiff(Timestamp t1, Timestamp t2){
         Map<String, Integer>result = new HashMap<>();
 
         long elapse;
@@ -282,11 +312,18 @@ public class TimeManager {
         }else{
             elapse = time2 -time1;
         }
-
+        int day = 0;
         int hours = (int)elapse / 3600;
         int minutes = ((int)elapse % 3600) / 60;
         int seconds = ((int)elapse % 3600) % 60;
 
+
+        if(hours >= 24){
+            day = hours / 24;
+        }
+
+
+        result.put(time.day, day);
         result.put(time.hours, hours);
         result.put(time.minutes, minutes);
         result.put(time.seconds, seconds);
@@ -342,7 +379,7 @@ public class TimeManager {
      * @param actualWorked
      * @return
      */
-    public static String DurationToTime(double actualWorked) {
+    public String DurationToTime(double actualWorked) {
 //        value from param e.g. 10.77
 //        0.77 is the % of the minutes within an hour
 //        60 minutes X 0.77 = 46 minutes
@@ -371,12 +408,40 @@ public class TimeManager {
         }
 
 //      TODO: create some default return out put
-        return "";
+        return "default";
+    }
+
+    String delayCalculator(Timestamp scheduleTime, Timestamp actualTime){
+        Map<String, Integer> result = getTimeDiff(scheduleTime,actualTime);
+        int hr = Integer.parseInt(Objects.requireNonNull(result.get(time.hours)).toString());
+        int mins = Integer.parseInt(Objects.requireNonNull(result.get(time.minutes)).toString());
+        int sec = Integer.parseInt(Objects.requireNonNull(result.get(time.seconds)).toString());
+        int day = Integer.parseInt(Objects.requireNonNull(result.get(time.day)).toString());
+        return formatDelayTime(hr,mins,sec);
     }
 
 
+    private String formatDurationTime(int hr, int min){
+        String tt = "Travel time";
+        if(hr > 0 && min == 0){
+            return Helper.stringBuilder("%dh %s",hr, tt);
+        }
+
+        if(hr == 0 ){
+            return Helper.stringBuilder("%dm %s",min, tt);
+        }
+
+        if(hr > 0 && min > 0){
+            return Helper.stringBuilder("%dh %dm %s",hr, min, tt);
+        }
+        return Helper.stringBuilder("%dhr & %dm %s",hr, min, tt);
+    }
 
 
+    String calculateDelayTime(){
+        Map<String, Integer> result = getTimeDiff(routeDestination.actualArrivalTime, routeOrigin.actualDepartureTime);
+        return formatDurationTime(Integer.parseInt(Objects.requireNonNull(result.get(time.hours)).toString()),Integer.parseInt(Objects.requireNonNull(result.get(time.minutes)).toString()));
+    }
 
     public interface time{
         String hours = "hours";

@@ -1,5 +1,8 @@
 package com.knymbus.transmo.FirestoreConnection;
 
+import android.util.Log;
+
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 import com.knymbus.transmo.Helper.SystemInterface;
@@ -25,13 +28,44 @@ public class ActiveBusDataManager extends FirestoreManager {
      */
     public ActiveBusDataManager(String collectionRefName) {super(collectionRefName);}
 
+
+
     /**
      * Get the full list from the database node
+     *
      */
     public FirestoreRecyclerOptions<ActiveBus> ActiveBusQuery(){
 
         Query query = this.getCollectionRef()
-                .orderBy("busNumber", Query.Direction.ASCENDING);
+                .whereEqualTo("runningFlag",true)
+                .orderBy("origin.actualDepartureTime", Query.Direction.ASCENDING);
+
+
+
+        /* Get Query result from Firebase Firestore database */
+        return new FirestoreRecyclerOptions.Builder<ActiveBus>()
+                .setQuery(query, ActiveBus.class)
+                .build();
+    }
+
+    public FirestoreRecyclerOptions<ActiveBus> SearchResultOfActiveBusQuery(String searchText){
+
+        Query query = null;
+
+        if(searchText.length() < 6){
+            query = this.getCollectionRef()
+                    .whereEqualTo("runningFlag",true)
+                    .orderBy("busNumber").startAt(searchText).endAt(searchText+"\uf8ff");
+
+        }
+
+        if(searchText.length() > 5){
+            query = this.getCollectionRef()
+                    .whereEqualTo("runningFlag",true)
+                    .orderBy("destination.code").startAt(searchText).endAt(searchText+"\uf8ff");
+
+        }
+
 
 
         /* Get Query result from Firebase Firestore database */
