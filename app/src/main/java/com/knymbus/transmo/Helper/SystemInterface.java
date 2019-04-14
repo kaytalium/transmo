@@ -9,6 +9,7 @@ public interface SystemInterface {
 
     interface CardTransaction{
         String parentNode = "smarter_card_balance";
+        String paymentMethod = "payment_card_info";
     }
 
     /**
@@ -154,5 +155,9 @@ public interface SystemInterface {
         String year = "y";
 
 
+    }
+
+    interface UserData{
+        String uid = "2LFVBak6IibH8JptRaH5oKNJzk62";
     }
 }

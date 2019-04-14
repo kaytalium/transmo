@@ -12,4 +12,5 @@
     <string name="title_activity_entrance">EntranceActivity</string>
     <string name="title_activity_manage_card_balance">ManageCardBalanceActivity</string>
     <string name="title_activity_topup">TopupActivity</string>
+    <string name="title_activity_card_manager">CardManagerActivity</string>
 </resources>

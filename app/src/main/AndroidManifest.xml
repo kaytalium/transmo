@@ -18,11 +18,13 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".CardManagerActivity"
+            android:label="@string/title_activity_card_manager"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".TopupActivity"
             android:label="@string/title_activity_topup"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ManageCardBalanceActivity"
             android:label="@string/title_activity_manage_card_balance"

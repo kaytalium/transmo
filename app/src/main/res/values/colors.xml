@@ -16,4 +16,6 @@
     <color name="colorFunkyBlue">#303381</color>
     <color name="colorFunkyDarkBlue">#26296F</color>
 
+    <!--Adding A Card scheme-->
+    <color name="colorLightBlack">#4A4A4A</color>
 </resources>
