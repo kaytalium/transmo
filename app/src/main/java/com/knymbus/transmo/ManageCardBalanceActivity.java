@@ -13,13 +13,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.knymbus.transmo.Helper.Helper;
 import com.knymbus.transmo.Helper.SystemInterface;
 import com.knymbus.transmo.SmarterCard.SmarterCardEngine;
 
 import java.util.Date;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -28,6 +26,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ManageCardBalanceActivity extends AppCompatActivity {
+
+    TextView cardBalance;
+    TextView cardNumber;
+    RecyclerView rv;
+    SmarterCardEngine routeEngine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +64,17 @@ public class ManageCardBalanceActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(getResources().getColor(R.color.colorDarkBlue));
 
 
-        final TextView cardBalance = findViewById(R.id.tv_bal);
-        final TextView cardnumber = findViewById(R.id.card_number);
+        cardBalance = findViewById(R.id.tv_bal);
+        cardNumber = findViewById(R.id.card_number);
+
+//        init main Recyclerview and start the route engine
+        rv = findViewById(R.id.rv_transactions);
+
+//        Start the app
+        init();
+    }
+
+    private void init(){
         DocumentReference docRef = FirebaseFirestore.getInstance().collection("smarter_card_info").document("2LFVBak6IibH8JptRaH5oKNJzk62");
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -70,10 +82,17 @@ public class ManageCardBalanceActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        double num = ((long) document.getData().get("balance"));
+                        double num = Double.valueOf(document.getData().get("balance").toString());
 
                         cardBalance.setText(Helper.stringBuilder("%s",Helper.formatToMoney(num)));
-                        cardnumber.setText(Helper.stringBuilder("%s",document.getData().get("cardNumber")));
+                        cardNumber.setText(Helper.stringBuilder("%s",document.getData().get("cardNumber")));
+
+
+//                          get route engine
+                        routeEngine = new SmarterCardEngine(rv,getApplicationContext());
+
+//                          start route engine
+                        routeEngine.start();
 
                     } else {
                         Log.d("Ovel", "No such document");
@@ -83,22 +102,18 @@ public class ManageCardBalanceActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-//        init main Recyclerview and start the route engine
-        RecyclerView rv = findViewById(R.id.rv_transactions);
-
-//        get route engine
-        final SmarterCardEngine routeEngine = new SmarterCardEngine(rv,getApplicationContext());
-
-//        start route engine
-        routeEngine.start();
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return super.onSupportNavigateUp();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        init();
     }
 
 }

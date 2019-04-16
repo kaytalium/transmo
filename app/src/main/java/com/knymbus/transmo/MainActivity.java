@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.knymbus.transmo.Helper.Helper;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity
 
         TextView txtWelcome = findViewById(R.id.welcome);
 //        creating the three buttons from design
-        LinearLayout btnRoute, btnBalance, btnTopup;
+        RelativeLayout btnRoute, btnBalance, btnTopup;
 
 //        set object var
         btnRoute = findViewById(R.id.layout_track_bus);
@@ -120,18 +121,20 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_route) {
+           Intent i = new Intent(getApplicationContext(), RouteActivity.class);
+            startActivity(i);
+        } else if (id == R.id.nav_ticket) {
+            Intent i = new Intent(getApplicationContext(), DigitalBusPassActivity.class);
+            startActivity(i);
+        } else if (id == R.id.nav_smarter_card) {
+            Intent i = new Intent(getApplicationContext(), TopupActivity.class);
+            startActivity(i);
+        } else if (id == R.id.nav_help) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_about) {
+            Intent i = new Intent(getApplicationContext(), AboutActivity.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

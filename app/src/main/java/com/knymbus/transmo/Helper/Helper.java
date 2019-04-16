@@ -40,5 +40,22 @@ public abstract class Helper {
 
     }
 
+    public static String generateCardBalance(){
+        return "0";
+    }
 
+
+    public static String splitString(String s){
+        return s.split("-")[0].trim();
+    }
+
+    public static String maskedCardNumber(String s){
+        String[] strings = s.split("-");
+        String r = "";
+        for (int i=0;i<3;i++){
+            r += " " +strings[i].replaceAll("[0-9]","X");
+        }
+        r += " " + strings[3];
+        return r;
+    }
 }

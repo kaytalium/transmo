@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:gravity="center"
+        android:layout_marginTop="150dp">
+        <TextView
+            android:id="@+id/app_abt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/app_name_about"
+            android:textSize="24sp"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/app_abt_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/app_version"
+            android:textSize="16sp"
+            android:textColor="@color/colorWhiteDim"
+            android:layout_below="@+id/app_abt_name"
+            />
+
+        <ImageView
+            android:id="@+id/app_abt_logo"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/ic_baseline_directions_bus_white24px"
+            android:layout_below="@+id/app_abt_version"/>
+
+        <TextView
+            android:id="@+id/app_abt_copyright"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/copyright"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/colorWhiteDim"
+            android:layout_below="@id/app_abt_logo"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/capstone_project"
+            android:textColor="@color/colorWhite" />
+    </RelativeLayout>
+
+</RelativeLayout>

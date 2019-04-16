@@ -17,5 +17,16 @@
     <color name="colorFunkyDarkBlue">#26296F</color>
 
     <!--Adding A Card scheme-->
-    <color name="colorLightBlack">#4A4A4A</color>
+    <color name="colorLightBlack">#302F2F</color>
+    <color name="colorDarkBlack">#222222</color>
+    <color name="colorLightTurquoise">#56E0E0</color>
+
+    <!--Adding Payment scheme-->
+    <color name="colorStylishGreen">#115F28</color>
+    <color name="colorDarkStylishGreen">#0E3818</color>
+
+    <!--About scheme-->
+    <color name="colorBlueGrey">#172027</color>
+    <color name="colorDarkBlueGrey">#111B20</color>
+
 </resources>

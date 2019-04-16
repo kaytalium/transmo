@@ -10,6 +10,7 @@ public interface SystemInterface {
     interface CardTransaction{
         String parentNode = "smarter_card_balance";
         String paymentMethod = "payment_card_info";
+        String smarterCardInfo = "smarter_card_info";
     }
 
     /**

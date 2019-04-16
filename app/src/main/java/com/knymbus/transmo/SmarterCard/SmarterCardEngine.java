@@ -3,7 +3,10 @@ package com.knymbus.transmo.SmarterCard;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.knymbus.transmo.FirestoreConnection.FirestoreConnection;
+import com.knymbus.transmo.Helper.SystemInterface;
 
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -43,9 +46,9 @@ public class SmarterCardEngine {
     /**
      * Handle all the Payment Method QUERY HERE
      */
-    public void startWallet(String uid){
+    public void startWallet(String uid, double smarterCardBalance){
         //        create adapter
-        walletAdapter = new WalletAdapter(FirestoreConnection.WalletManager.CardQuery(uid), $context);
+        walletAdapter = new WalletAdapter(FirestoreConnection.WalletManager.CardQuery(uid), $context, smarterCardBalance);
 
         Log.d("Ovel", "SmarterCardEngine line 50");
 //         configure recyclerview
@@ -58,5 +61,19 @@ public class SmarterCardEngine {
 
     public void stopWallet(){
         walletAdapter.stopListening();
+    }
+
+    public void addToWallet(PaymentMethod paymentMethod){
+        DocumentReference docRef = FirebaseFirestore.getInstance().collection(SystemInterface.CardTransaction.paymentMethod).document();
+//        String pushKey = docRef.;
+//
+//        Log.d("Ovel", "push key information: "+pushKey);
+//        paymentMethod.setDocId(pushKey);
+
+        FirestoreConnection.WalletManager.create(paymentMethod);
+    }
+
+    public void restartWallet() {
+        walletAdapter.notifyDataSetChanged();
     }
 }

@@ -13,4 +13,81 @@
     <string name="title_activity_manage_card_balance">ManageCardBalanceActivity</string>
     <string name="title_activity_topup">TopupActivity</string>
     <string name="title_activity_card_manager">CardManagerActivity</string>
+    <string name="name_on_card">NAME ON CARD</string>
+    <string name="actor">John E. Doe</string>
+    <string name="card_number">CARD NUMBER</string>
+    <string name="card_number_example">XXXX XXXX XXXX XXXX</string>
+    <string name="card_type_label">Card Type</string>
+    <string name="account_type_label">Account Type</string>
+    <string name="card_type_select">Please select a card type</string>
+    <string name="card_bank_label">Bank</string>
+    <string name="dialog_message">Setting up account please wait....</string>
+    <string name="dialog_title">Adding Payment Method</string>
+    <string name="connect_to_bank_title">Connecting To You\'re Bank</string>
+    <string name="connection_mesg">Verifying Account Information....</string>
+    <string name="verification_complete">Verification Status</string>
+    <string name="verification_mesg">You\'re account was verified and added successfully.</string>
+    <string name="ok">OK</string>
+    <string name="title_activity_payment">PaymentActivity</string>
+    <string name="account_balance">Amount Available</string>
+    <string name="online_card_balance">$34,576.67</string>
+    <string name="make_payment">Make Payment</string>
+    <string name="topup_amount_label">Select Top Up Amount</string>
+    <string name="insufficient_funds">Insufficient Funds</string>
+    <string name="insufficient_card_balance">Please contact your bank or refill you\'re card account.</string>
+    <string name="title_payment_option">Payment Option</string>
+    <string name="no_selection_made">Please select a Top up Amount</string>
+    <string name="topup_transaction_success_msg">Smarter Card Updated Successfully</string>
+    <string name="topup_transaction_success">Transaction Successful</string>
+
+    <string-array name="card_type">
+        <item>--Select Card Type--</item>
+        <item>Debit Card</item>
+        <item>Credit Card</item>
+    </string-array>
+
+    <string-array name="bank_type">
+        <item>--Select Bank--</item>
+        <item>National Commercial Bank - (NCB)</item>
+        <item>Scotia Bank - (BNS)</item>
+        <item>Sagicor Bank - (SB)</item>
+        <item>Jamaica National - (JN)</item>
+        <item>Victoria Mutual - (VM)</item>
+    </string-array>
+
+    <string-array name="sub_card_type">
+        <item>--Select Account Type--</item>
+        <item>Midas</item>
+        <item>Scotia Mint</item>
+        <item>Visa</item>
+        <item>Keycard</item>
+        <item>MasterCard</item>
+        <item>Paypal</item>
+    </string-array>
+
+    <string-array name="payment_amount">
+        <item>--Select An Amount--</item>
+        <item>500</item>
+        <item>700</item>
+        <item>1000</item>
+        <item>1200</item>
+        <item>1500</item>
+        <item>2000</item>
+    </string-array>
+
+    <!--Main Menu items-->
+    <string name="route">Bus Routes</string>
+    <string name="app_ticket">Digital Bus Pass</string>
+    <string name="card_manager">Smarter Card</string>
+    <string name="help">Help</string>
+    <string name="nav_about">About</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_digital_bus_pass">DigitalBusPassActivity</string>
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="app_name_about">Transico Mobile</string>
+    <string name="app_version">Version 1.0.1</string>
+    <string name="copyright">&#169; 2018\-2019 CodeZero Inc.</string>
+    <string name="capstone_project">Capstone Major Project</string>
+
+
 </resources>
